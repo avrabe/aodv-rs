@@ -21,7 +21,7 @@ fn main() {
                     exit(1);
                 }
             }
-            Err(e) => panic!(e),
+            Err(e) => std::panic::panic_any(e),
         }
 
         // Start internal server

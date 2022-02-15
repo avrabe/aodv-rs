@@ -6,7 +6,7 @@ use std::io;
 use std::net::{Ipv4Addr, SocketAddr};
 
 use byteorder::{BigEndian, ByteOrder};
-use bytes::{BufMut, Bytes, BytesMut};
+use bytes::{BufMut, BytesMut};
 use tokio_io::codec::{Decoder, Encoder};
 
 pub mod config;
@@ -91,7 +91,7 @@ impl Decoder for AodvCodec {
     type Error = io::Error;
 
     fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
-        match AodvMessage::parse(&src) {
+        match AodvMessage::parse(src) {
             Ok(msg) => Ok(Some(msg)),
             Err(e) => Err(e),
         }
@@ -194,7 +194,7 @@ impl RREQ {
 
         b
     }
-    pub fn handle_message(&mut self, addr: &SocketAddr) {
+    pub fn handle_message(&mut self, _addr: &SocketAddr) {
         unimplemented!();
     }
 }
@@ -276,7 +276,7 @@ impl RREP {
 
         b
     }
-    pub fn handle_message(&mut self, addr: &SocketAddr) {
+    pub fn handle_message(&mut self, _addr: &SocketAddr) {
         unimplemented!();
     }
 }
@@ -356,7 +356,7 @@ impl RERR {
         }
         b
     }
-    pub fn handle_message(&mut self, addr: &SocketAddr) {
+    pub fn handle_message(&mut self, _addr: &SocketAddr) {
         unimplemented!();
     }
 }
@@ -418,7 +418,7 @@ mod test_encoding {
         let rerr = RERR {
             n: false,
             dest_count: 2,
-            udest_list: udest_list,
+            udest_list,
         };
         let bytes: &[u8] = &[
             3, 0, 0, 2, 192, 168, 10, 18, 0, 7, 93, 195, 255, 255, 255, 255, 0, 0, 0, 0,
@@ -433,7 +433,7 @@ mod test_encoding {
         let rerr = RERR {
             n: false,
             dest_count: 3,
-            udest_list: udest_list,
+            udest_list,
         };
         let bytes: &[u8] = &[
             3, 0, 0, 3, 192, 168, 10, 18, 0, 7, 93, 195, 255, 255, 255, 255, 0, 0, 0, 0, 192, 168,
