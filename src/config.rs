@@ -17,7 +17,7 @@ use std::str::FromStr;
 #[derive(Debug, PartialEq)]
 pub struct Config {
     pub current_ip: Ipv4Addr,
-    pub interface: String,
+    //pub interface: String,
     pub broadcast_address: Ipv4Addr,
     pub port: u16,
 
@@ -86,9 +86,9 @@ impl Config {
         let doc = &yaml_file[0];
 
         // Replace appropriate arguments
-        doc["Interface"]
-            .as_str()
-            .map(|x| self.interface = String::from(x));
+        //doc["Interface"]
+        //    .as_str()
+        //    .map(|x| self.interface = String::from(x));
         doc["BroadcastAddress"].as_str().map(|x| {
             if Ipv4Addr::from_str(x).is_ok() {
                 self.broadcast_address = Ipv4Addr::from_str(x).unwrap();
@@ -176,7 +176,7 @@ impl Default for Config {
     fn default() -> Self {
         Config {
             current_ip: Ipv4Addr::new(0, 0, 0, 0),
-            interface: "wlano".parse().unwrap(),
+            //interface: "wlano".parse().unwrap(),
             broadcast_address: Ipv4Addr::new(255, 255, 255, 255),
             port: 1200,
 
@@ -294,7 +294,7 @@ TTL_THRESHOLD: 8
 
     // Manually calculated chagnes
     let config2 = Config {
-        interface: String::from("wlan1"),
+        //interface: String::from("wlan1"),
         broadcast_address: Ipv4Addr::new(192, 168, 10, 251),
         current_ip: config1.current_ip,
         port: 1201,
