@@ -74,14 +74,13 @@ impl Config {
         };
 
         // Read string file into Yaml file
-        let yaml_file;
-        match YamlLoader::load_from_str(&contents) {
-            Ok(y) => yaml_file = y,
+        let yaml_file = match YamlLoader::load_from_str(&contents) {
+            Ok(y) => y,
             Err(_) => {
                 //TODO: log.Println("Unable to parse yaml, using default")
                 return;
             }
-        }
+        };
         // First doc (there is multi-document support)
         let doc = &yaml_file[0];
 
