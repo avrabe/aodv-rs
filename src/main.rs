@@ -26,7 +26,5 @@ fn main() {
 
         // Start internal server
         server::aodv();
-    } else {
-        println!("{}", args.usage());
     }
 }

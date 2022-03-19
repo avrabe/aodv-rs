@@ -3,7 +3,7 @@ extern crate clap;
 extern crate yaml_rust;
 
 use self::chrono::Duration;
-use self::clap::{App, Arg, ArgMatches};
+use self::clap::{Arg, ArgMatches, Command};
 use self::yaml_rust::YamlLoader;
 
 use std::fs::File;
@@ -208,34 +208,34 @@ impl Default for Config {
 }
 
 ///  Parse the command line arguments or print help/usage information
-pub fn get_args() -> ArgMatches<'static> {
-    let matches = App::new("aodv")
+pub fn get_args() -> ArgMatches {
+    let matches = Command::new("aodv")
         .version("0.0.1")
         .about("Implements the AODV routing protocol as defined in RFC 3561")
         .arg(
-            Arg::with_name("port")
-                .short("p")
+            Arg::new("port")
+                .short('p')
                 .long("port")
                 .value_name("PORT")
                 .help("The port to run the tcp server on.")
                 .takes_value(true),
         )
         .arg(
-            Arg::with_name("start_aodv")
-                .short("s")
+            Arg::new("start_aodv")
+                .short('s')
                 .long("start")
                 .help("Start the aodv daemon"),
         )
         .arg(
-            Arg::with_name("current_ip")
+            Arg::new("current_ip")
                 .long("ip")
                 .value_name("IP ADDRESS")
                 .help("The current IP address of the device")
                 .takes_value(true),
         )
         .arg(
-            Arg::with_name("config_file")
-                .short("c")
+            Arg::new("config_file")
+                .short('c')
                 .long("config")
                 .value_name("CONFIG FILE")
                 .help("Alternate config file")
