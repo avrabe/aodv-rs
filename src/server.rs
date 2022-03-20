@@ -17,7 +17,7 @@ pub async fn aodv() {
     let socket = UdpSocket::bind(&addr).await.unwrap();
     println!("Started listening on {}", AODV_PORT);
 
-    let framed =  UdpFramed::new(socket, AodvCodec);
+    let framed = UdpFramed::new(socket, AodvCodec);
 
     framed.into_future().await;
     // let stream = stream

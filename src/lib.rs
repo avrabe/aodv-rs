@@ -6,7 +6,7 @@ use std::io;
 use std::net::{Ipv4Addr, SocketAddr};
 
 use byteorder::{BigEndian, ByteOrder};
-use bytes::{BufMut, BytesMut, Bytes};
+use bytes::{BufMut, Bytes, BytesMut};
 use tokio_util::codec::{Decoder, Encoder};
 
 pub mod config;
