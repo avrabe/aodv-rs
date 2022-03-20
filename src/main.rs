@@ -1,4 +1,5 @@
 extern crate futures;
+extern crate tokio;
 
 extern crate aodv;
 
@@ -7,7 +8,8 @@ use std::process::exit;
 
 use aodv::{config, server};
 
-fn main() {
+#[tokio::main]
+async fn main() {
     // Get command line arguments
     let args = config::get_args();
 
@@ -18,13 +20,13 @@ fn main() {
             Ok(s) => {
                 if s != "root" {
                     eprintln!("Must be root to run the server!");
-                    exit(1);
+                    //exit(1);
                 }
             }
             Err(e) => std::panic::panic_any(e),
         }
 
         // Start internal server
-        server::aodv();
+        server::aodv().await;
     }
 }

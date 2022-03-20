@@ -1,13 +1,13 @@
 extern crate byteorder;
 extern crate bytes;
-extern crate tokio_io;
+extern crate tokio_util;
 
 use std::io;
 use std::net::{Ipv4Addr, SocketAddr};
 
 use byteorder::{BigEndian, ByteOrder};
-use bytes::{BufMut, BytesMut};
-use tokio_io::codec::{Decoder, Encoder};
+use bytes::{BufMut, BytesMut, Bytes};
+use tokio_util::codec::{Decoder, Encoder};
 
 pub mod config;
 pub mod server;
@@ -74,14 +74,14 @@ impl AodvMessage {
 /// The codec for converting aodv control messages to bytes and back through tokio
 pub struct AodvCodec;
 
-impl Encoder for AodvCodec {
-    type Item = AodvMessage;
+impl Encoder<AodvMessage> for AodvCodec {
     type Error = io::Error;
 
     fn encode(&mut self, msg: AodvMessage, buf: &mut BytesMut) -> Result<(), io::Error> {
         let msg = msg.bit_message();
-        buf.reserve(msg.len());
-        buf.put(msg);
+        let b = Bytes::from(msg);
+        buf.reserve(b.len());
+        buf.put(b);
         Ok(())
     }
 }
