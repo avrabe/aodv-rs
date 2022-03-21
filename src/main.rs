@@ -20,7 +20,7 @@ async fn main() {
             Ok(s) => {
                 if s != "root" {
                     eprintln!("Must be root to run the server!");
-                    //exit(1);
+                    exit(1);
                 }
             }
             Err(e) => std::panic::panic_any(e),
